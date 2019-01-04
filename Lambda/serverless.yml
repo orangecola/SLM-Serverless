@@ -1,0 +1,28 @@
+service: SLM-Serverless
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: us-east-1
+  vpc:
+    securityGroupIds:
+     - sg-2bd77e63
+    subnetIds:
+     - subnet-3548b569
+     - subnet-c14e8fa6
+     - subnet-d4ee10fa
+     - subnet-4c46c606
+     - subnet-daa5b4e5
+     - subnet-e04cc5ef
+  environment:
+    secret_name: SLM/db
+    region: ${self:provider.region}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "secretsmanager:GetSecretValue"
+      Resource: "arn:aws:secretsmanager:us-east-1:549791063841:secret:SLM/db-a0UJ4B"
+functions:
+  hello:
+    handler: handler.hello
+  test:
+    handler: handler.test
