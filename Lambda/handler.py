@@ -1,10 +1,11 @@
 from common import *
 
 def hello(event, context):
+    credentials = aws_SecretsManager()
+    sql = sqlStatement(credentials, "SELECT VERSION()")
     body = {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "input": event,
-        "db": aws_SecretsManager()
+        "sql": sql,
+        "db": credentials
     }
 
     response = {

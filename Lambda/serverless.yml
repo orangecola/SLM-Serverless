@@ -1,5 +1,16 @@
 service: SLM-Serverless
 
+plugins:
+  - serverless-python-requirements
+package:
+  exclude:
+    - node_modules/**
+    - __pycache__/**
+    - env/**
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+    pythonBin: /usr/bin/python3
 provider:
   name: aws
   runtime: python3.7
@@ -21,6 +32,8 @@ provider:
     - Effect: "Allow"
       Action: "secretsmanager:GetSecretValue"
       Resource: "arn:aws:secretsmanager:us-east-1:549791063841:secret:SLM/db-a0UJ4B"
+  timeout: 60
+  memorySize: 128
 functions:
   hello:
     handler: handler.hello
