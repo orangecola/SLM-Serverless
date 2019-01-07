@@ -36,3 +36,15 @@ def sqlStatement(credentials, statement):
     mycursor = mydb.cursor()
     mycursor.execute(statement)
     return mycursor.fetchall()
+
+def packResponse(result):
+    body = {
+        "result": result
+    }
+
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(body)
+    }
+
+    return response

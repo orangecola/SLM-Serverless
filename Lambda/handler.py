@@ -1,29 +1,11 @@
 from common import *
 
-def hello(event, context):
+def getLogs(event, context):
     credentials = aws_SecretsManager()
-    sql = sqlStatement(credentials, "SELECT VERSION()")
-    body = {
-        "sql": sql,
-        "db": credentials
-    }
+    sql = sqlStatement(credentials, "SELECT * FROM logs ORDER BY time DESC")
+    return packResponse(sql)
 
-    response = {
-        "statusCode": 200,
-        "body": json.dumps(body)
-    }
-
-    return response
-
-def test(event, context):
-    body = {
-        "message": "Test Function",
-        "input": event
-    }
-
-    response = {
-        "statusCode": 200,
-        "body": json.dumps(body)
-    }
-
-    return response
+def getModules(event, context):
+    credentials = aws_SecretsManager()
+    sql = sqlStatement(credentials, "SELECT * FROM modules")
+    return packResponse(sql)
