@@ -7,7 +7,7 @@ package:
     - node_modules/**
     - __pycache__/**
     - env/**
-    - Layer/**
+    - Layers/**
     - package.json
 #custom:
 #  pythonRequirements:
@@ -45,4 +45,3 @@ functions:
     handler: handler.getModules
     layers:
       - ${cf:SLM-Serverless-layer-dev.SLMServerlessLayerExport}
-  

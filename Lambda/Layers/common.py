@@ -2,10 +2,6 @@ import json
 import os
 import boto3
 import ast
-try:
-      import unzip_requirements
-except ImportError:
-      pass
 import mysql.connector
 
 def aws_SecretsManager():
@@ -25,7 +21,7 @@ def aws_SecretsManager():
     connection_details = ast.literal_eval(get_secret_value_response["SecretString"])
     return [connection_details["username"], connection_details["password"], connection_details["host"], connection_details["db"]]
 
-def sqlStatement(credentials, statement):
+def sqlStatement(credentials, statement, data=None):
     mydb = mysql.connector.connect(
         user=credentials[0],
         passwd=credentials[1],
@@ -33,8 +29,11 @@ def sqlStatement(credentials, statement):
         db=credentials[3]
     )
 
-    mycursor = mydb.cursor()
-    mycursor.execute(statement)
+    mycursor = mydb.cursor(prepared=True)
+    if data == None:
+        mycursor.execute(statement)
+    else:
+        mycursor.execute(statement, data)
     return mycursor.fetchall()
 
 def packResponse(result):
