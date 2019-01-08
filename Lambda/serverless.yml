@@ -1,16 +1,18 @@
 service: SLM-Serverless
 
-plugins:
-  - serverless-python-requirements
+#plugins:
+#  - serverless-python-requirements
 package:
   exclude:
     - node_modules/**
     - __pycache__/**
     - env/**
-custom:
-  pythonRequirements:
-    dockerizePip: non-linux
-    pythonBin: /usr/bin/python3
+    - Layer/**
+    - package.json
+#custom:
+#  pythonRequirements:
+#    dockerizePip: non-linux
+#    pythonBin: /usr/bin/python3
 provider:
   name: aws
   runtime: python3.7
@@ -37,5 +39,10 @@ provider:
 functions:
   getLogs:
     handler: handler.getLogs
+    layers:
+      - ${cf:SLM-Serverless-layer-dev.SLMServerlessLayerExport}
   getModules:
     handler: handler.getModules
+    layers:
+      - ${cf:SLM-Serverless-layer-dev.SLMServerlessLayerExport}
+  

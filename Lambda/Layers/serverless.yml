@@ -1,0 +1,13 @@
+service: SLM-Serverless-layer
+provider:
+  name: aws
+layers:
+  SLM-Serverless:
+    path: SLS-Serverless-layer
+resources:
+  Outputs:
+    SLMServerlessLayerExport:
+      Value:
+        Ref: SLMDashServerlessLambdaLayer
+      Export:
+        Name: SLMDashServerlessLambdaLayer

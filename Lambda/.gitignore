@@ -22,3 +22,4 @@ node_modules/
 # Serverless directories
 .serverless
 .requirements.zip
+Layers/SLS-Serverless-layer/
