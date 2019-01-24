@@ -3,16 +3,10 @@ service: SLM-Serverless
 #plugins:
 #  - serverless-python-requirements
 package:
+  individually: true
   exclude:
-    - node_modules/**
-    - __pycache__/**
-    - env/**
-    - Layers/**
-    - package.json
-#custom:
-#  pythonRequirements:
-#    dockerizePip: non-linux
-#    pythonBin: /usr/bin/python3
+    - "*"
+    - "**/**"
 provider:
   name: aws
   runtime: python3.7
@@ -38,10 +32,16 @@ provider:
   memorySize: 128
 functions:
   getLogs:
-    handler: handler.getLogs
+    handler: src/getLogs.handler
     layers:
       - ${cf:SLM-Serverless-layer-dev.SLMServerlessLayerExport}
+    package:
+      include:
+        - src/getLogs.py
   getModules:
-    handler: handler.getModules
+    handler: src/getModules.handler
     layers:
       - ${cf:SLM-Serverless-layer-dev.SLMServerlessLayerExport}
+    package:
+      include:
+        - src/getModules.py
